@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>4Board</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🟨</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Kalam:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ========== TELA 1: ENTRAR / CRIAR CONTA ========== -->
+  <section id="view-auth" class="view">
+    <div class="auth-art" aria-hidden="true">
+      <h1 class="wordmark">4Board</h1>
+      <div class="demo-note c-yellow" style="--r:-3deg; top:58%; left:12%">Ideias soltas viram plano</div>
+      <div class="demo-note c-pink"   style="--r:2deg;  top:66%; left:44%">Todo mundo no mesmo quadro</div>
+      <div class="demo-note c-blue"   style="--r:-1deg; top:5%; left:58%">Arraste, edite, reorganize</div>
+    </div>
+
+    <div class="auth-panel">
+      <div class="tabs" role="tablist">
+        <button class="tab active" data-tab="login" role="tab">Entrar</button>
+        <button class="tab" data-tab="register" role="tab">Criar conta</button>
+      </div>
+
+      <form id="form-login" class="auth-form">
+        <label>E-mail <input name="email" type="email" autocomplete="email" required></label>
+        <label>Senha <input name="senha" type="password" autocomplete="current-password" required></label>
+        <button class="btn primary" type="submit">Entrar</button>
+      </form>
+
+      <form id="form-register" class="auth-form hidden">
+        <label>Nome <input name="nome" autocomplete="name" required maxlength="60"></label>
+        <label>E-mail <input name="email" type="email" autocomplete="email" required></label>
+        <label>Senha <input name="senha" type="password" autocomplete="new-password" minlength="6" required></label>
+        <button class="btn primary" type="submit">Criar conta</button>
+      </form>
+
+      <p id="auth-error" class="form-error" role="alert"></p>
+    </div>
+  </section>
+
+  <!-- ========== TELA 2: MEUS QUADROS ========== -->
+  <section id="view-projects" class="view hidden">
+    <header class="topbar">
+      <span class="logo">4Board</span>
+      <div class="topbar-right">
+        <span id="me-name" class="muted"></span>
+        <button id="btn-logout" class="btn ghost">Sair</button>
+      </div>
+    </header>
+
+    <main class="projects-main">
+      <h2>Seus quadros</h2>
+      <form id="form-new-project" class="inline-form">
+        <input name="nome" placeholder="Nome do novo quadro, ex.: Campanha de Black Friday" maxlength="80" required>
+        <button class="btn primary" type="submit">Criar quadro</button>
+      </form>
+      <ul id="project-list" class="project-list"></ul>
+      <p id="projects-empty" class="empty hidden">Nenhum quadro ainda. Crie o primeiro acima ou peça para alguém te convidar pelo seu e-mail.</p>
+    </main>
+  </section>
+
+  <!-- ========== TELA 3: O QUADRO ========== -->
+  <section id="view-board" class="view hidden">
+    <header class="topbar board-bar">
+      <button id="btn-back" class="btn ghost" title="Voltar aos quadros">← Quadros</button>
+      <h2 id="board-title" class="board-title"></h2>
+      <div class="topbar-right">
+        <span id="sync-status" class="sync" title="Status da sincronização"></span>
+        <div id="online-list" class="avatars"></div>
+        <button id="btn-members" class="btn ghost">Pessoas</button>
+      </div>
+    </header>
+
+    <div id="viewport" class="viewport">
+      <div id="world" class="world"></div>
+      <p id="board-empty" class="board-empty hidden">Clique duas vezes em qualquer lugar para criar uma nota</p>
+    </div>
+
+    <div class="toolbar" role="toolbar">
+      <button id="btn-add" class="btn primary">+ Nota</button>
+      <div id="swatches" class="swatches" title="Cor da nota"></div>
+      <span class="sep"></span>
+      <button id="btn-zoom-out" class="btn icon" title="Diminuir zoom">−</button>
+      <button id="btn-zoom-reset" class="btn icon zoom-label" title="Voltar a 100%">100%</button>
+      <button id="btn-zoom-in" class="btn icon" title="Aumentar zoom">+</button>
+    </div>
+  </section>
+
+  <!-- ========== MODAL: PESSOAS DO QUADRO ========== -->
+  <dialog id="dlg-members" class="dialog">
+    <h3>Pessoas neste quadro</h3>
+    <ul id="member-list" class="member-list"></ul>
+    <form id="form-invite" class="inline-form">
+      <input name="email" type="email" placeholder="E-mail de quem já tem conta" required>
+      <button class="btn primary" type="submit">Convidar</button>
+    </form>
+    <p id="invite-msg" class="form-error"></p>
+    <div class="dialog-actions">
+      <button id="btn-rename" class="btn ghost owner-only">Renomear quadro</button>
+      <button class="btn" data-close>Fechar</button>
+    </div>
+  </dialog>
+
+  <div id="toast" class="toast" role="status"></div>
+
+  <script src="config.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
